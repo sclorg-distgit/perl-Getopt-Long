@@ -3,7 +3,7 @@
 Name:           %{?scl_prefix}perl-Getopt-Long
 Epoch:          1
 Version:        2.51
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Extended processing of command line options
 License:        GPLv2+ or Artistic
 URL:            https://metacpan.org/release/Getopt-Long
@@ -43,6 +43,7 @@ enabled by default.
 
 %prep
 %setup -q -n Getopt-Long-%{version}
+%{?scl:scl enable %{scl} '}perl -MConfig -i -pe %{?scl:'"}'%{?scl:"'}s{#!/usr/bin/perl}{$Config{startperl}}%{?scl:'"}'%{?scl:"'} examples/*%{?scl:'}
 
 %build
 %{?scl:scl enable %{scl} '}perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1 && %{make_build}%{?scl:'}
@@ -60,6 +61,9 @@ enabled by default.
 %{_mandir}/man3/*
 
 %changelog
+* Thu Mar 26 2020 Petr Pisar <ppisar@redhat.com> - 1:2.51-3
+- Normalize shebangs (bug #1817329)
+
 * Tue Sep 24 2019 Jitka Plesnikova <jplesnik@redhat.com> - 1:2.51-2
 - SCL
 
